@@ -1,21 +1,95 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
+<h1>Gerenciador de notícias</h1>
+<h2>Noticias recentes</h2>
+<p>Clique no título da noticia para expandir</p>
+<div>
+  <ul>
+    <li *ngFor="let noticia of noticias; let i = index">
+      <p (click)="mostrar(noticia)">{{ noticia.titulo }}</p>
+      <p *ngIf="noticia.visivel">
+        w{{ noticia.conteudo }} 
+        <br>
+        {{ noticia.data_publicacao }}
+        <br>
+        {{ noticia.noticia_publicada }}
+        <br>
+        {{ noticia.categoria }}
+        <br>
+        {{ noticia.tags }}
+        <br>
+        {{ noticia.editoria }}
+        <br>
+        <br> ----------------------
+        <br>
+        <button (click)="fechar(noticia)">Fechar</button>
+        <button (click)="excluir(noticia)">Excluir</button>
+      </p>
+    </li>
+  </ul>
 </div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/cli">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
+<h2>Cadastrar noticia</h2>
+<form #cadastro="ngForm" (submit)="salvar()">
+  <div>
+    <label for="titulo">Título</label>
+    <input type="text" id="titulo" name="titulo" [(ngModel)]="titulo" required>
+  </div>
+  <div>
+    <label for="conteudo">Conteúdo</label>
+    <textarea id="conteudo" name="conteudo" cols="80" rows="5" [(ngModel)]="conteudo" required></textarea>
+  </div>
+  <div>
+    <label for="data_publicacao">Data</label>
+    <input type="date" id="data_publicacao" name="data" [(ngModel)]="data_publicacao" required>
+  </div>
+  <div>
+    <label for="noticia_publicada">Noticia já publicada ?</label>
+    <input type="checkbox" id="noticia_publicada" name="noticia_publicada" value="Sim" checked
+      [(ngModel)]="noticia_publicada">Sim<br>
+    <input type="checkbox" id="noticia_publicada" name="noticia_publicada" value="Nao"
+      [(ngModel)]="noticia_publicada">Nao<br>
+  </div>
+  <div>
+    <label for="categoria">Categoria</label>
+    <select name="categoria" [(ngModel)]="categoria">
+      <option value="Esportes">Esportes</option>
+      <option value="Politica">Politica</option>
+      <option value="Economia">Economia</option>
+      <option value="Tecnologia">Tecnologia</option>
+    </select>
+  </div>
+  <div>
+    <label for="tags">Tags</label>
+    <select name="tags" [(ngModel)]="tags" multiple>
+      <option value="tag1">Tag1</option>
+      <option value="tag2">Tag2</option>
+      <option value="tag3">Tag3</option>
+      <option value="tag4">Tag4</option>
+    </select>
+  </div>
+  <div>
+    <label for="economia">Economia</label>
+    <input type="radio" id="economia" name="economia" value="economia" checked [(ngModel)]="editoria">
+    <br>
 
+    <label for="politica">Politica</label>
+    <input type="radio" id="politica" name="politica" value="politica" [(ngModel)]="editoria">
+    <br>
+
+    <label for="esporte">Esporte</label>
+    <input type="radio" id="esporte" name="esporte" value="esporte" [(ngModel)]="editoria">
+    <br>
+
+    <label for="entreterimento">Entreterimento</label>
+    <input type="radio" id="entreterimento" name="entreterimento" value="entreterimento" [(ngModel)]="editoria">
+    <br>
+
+  </div>
+
+
+  <div>
+    <button type="submit" [disabled]="!cadastro.form.valid">Salvar</button>
+    <button type="reset" formnovalidate>Limpar</button>
+  </div>
+
+</form>
 <router-outlet></router-outlet>

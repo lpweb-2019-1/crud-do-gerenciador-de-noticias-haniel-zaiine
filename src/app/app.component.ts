@@ -12,19 +12,10 @@ export class AppComponent implements OnInit{
   conteudo = null;
   data_publicacao = null;
   noticia_publicada = null;
-  categoria = [
-    { name: "esportes", value: "Esportes" },
-    { name: "politica", value: "Politica" },
-    { name: "economia", value: "Economia" },
-    { name: "tecnologia", value: "Tecnologia" }
-  ];
-  tags = [
-    { name: "tag1", value: "tag1" },
-    { name: "tag2", value: "tag2" },
-    { name: "tag3", value: "tag3" },
-    { name: "tag4", value: "tag4" }
-  ];
+  categoria = null;
+  tags = null;
   editoria = null;
+  editar = null;
 
   ngOnInit(){
     this.noticias.push(new Noticia(
@@ -39,18 +30,29 @@ export class AppComponent implements OnInit{
     ));
   }
 
-  salvar(form){
-    const noticia = new Noticia(
-      this.noticias.length,
-      this.titulo,
-      this.conteudo,
-      this.data_publicacao,
-      this.noticia_publicada,
-      this.categoria,
-      this.editoria,
-      this.tags
-    );
-    this.noticias.push(noticia);
+  salvar() {
+    if (this.editar) {
+      this.editar.titulo = this.titulo;
+      this.editar.conteudo = this.conteudo;
+      this.editar.data_publicacao = this.data_publicacao;
+      this.editar.noticia_publicada = this.noticia_publicada;
+      this.editar.categoria = this.categoria;
+      this.editar.tags = this.tags;
+      this.editar.editoria = this.editoria
+    } else {
+      const noticia = new Noticia(
+        this.noticias.length,
+        this.titulo,
+        this.conteudo,
+        this.data_publicacao,
+        this.noticia_publicada,
+        this.categoria,
+        this.editoria,
+        this.tags
+      )
+      this.noticias.push(noticia);
+    };
+
     this.titulo = null;
     this.conteudo = null;
     this.data_publicacao = null;
@@ -58,7 +60,6 @@ export class AppComponent implements OnInit{
     this.categoria = null;
     this.tags = null;
     this.editoria = null;
-
   }
 
   mostrar(noticia){
@@ -74,4 +75,17 @@ export class AppComponent implements OnInit{
       this.noticias.splice(this.noticias.findIndex(n => n.id === noticia.id), 1);
     }
   }
+
+
+  editarNoticia(noticia) {
+    this.editar = noticia;
+    this.titulo = noticia.titulo;
+    this.conteudo = noticia.conteudo;
+    this.data_publicacao = noticia.data_publicacao;
+    this.noticia_publicada = noticia.noticia_publicada;
+    this.categoria = noticia.categoria;
+    this.tags = noticia.tags;
+    this.editoria = noticia.editoria
+}
+
 }

@@ -7,7 +7,7 @@
     <li *ngFor="let noticia of noticias; let i = index">
       <p (click)="mostrar(noticia)">{{ noticia.titulo }}</p>
       <p *ngIf="noticia.visivel">
-        w{{ noticia.conteudo }} 
+        {{ noticia.conteudo }} 
         <br>
         {{ noticia.data_publicacao }}
         <br>
@@ -23,6 +23,7 @@
         <br>
         <button (click)="fechar(noticia)">Fechar</button>
         <button (click)="excluir(noticia)">Excluir</button>
+        <button (click)="editarNoticia(noticia)">Editar</button>
       </p>
     </li>
   </ul>
@@ -42,11 +43,9 @@
     <input type="date" id="data_publicacao" name="data" [(ngModel)]="data_publicacao" required>
   </div>
   <div>
-    <label for="noticia_publicada">Noticia já publicada ?</label>
+    <label for="noticia_publicada">Noticia já publicada </label>
     <input type="checkbox" id="noticia_publicada" name="noticia_publicada" value="Sim" checked
-      [(ngModel)]="noticia_publicada">Sim<br>
-    <input type="checkbox" id="noticia_publicada" name="noticia_publicada" value="Nao"
-      [(ngModel)]="noticia_publicada">Nao<br>
+      [(ngModel)]="noticia_publicada">
   </div>
   <div>
     <label for="categoria">Categoria</label>
